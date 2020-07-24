@@ -5,20 +5,37 @@ print('Welcome to user management CLI application')
 user_list = {}
 
 def create_account():
+    
     name = input('Say your name: ')
-    email = input('Enter email: ')
-    user = User(name, email)
+
+    while True:
+        email = input('Enter email: ')
+        if '@' in email:
+            temp = [i for i in email[email.find('@'):]]
+            if '.' in temp:
+                user = User(name, email)
+                break
+            else:
+                print("Invalid Email address! Please enter the correct one.")
+                continue
+        else:
+            print("Invalid Email address! Please enter the correct one.")
+            continue
+    
     uname = user.set_username()
+
     current_user = {
         'name': name,
         'email': email
     }
+
     while True:
         if uname in user_list:
             new_uname = input(f'Sorry your username "{uname}" has been taken, choose another one: ')
             uname = new_uname.replace(" ", '')
         else:
             break
+    
     user_list[f'{uname}'] = current_user
     print(f"Hello, {name}! Your account has been created")
 
