@@ -1,6 +1,6 @@
 from scripts.user import User
 
-print('Welcome to user management CLI application')
+print('\nWelcome to user management CLI application')
 
 user_list = {}
 
@@ -37,7 +37,7 @@ def create_account():
             break
     
     user_list[f'{uname}'] = current_user
-    print(f"\nHello, {name}! Your account has been created.\n\nChoose what to do next - ")
+    print(f"\nHello, {name}! Your account has been created as {uname}.\n\nChoose what to do next - ")
 
 
 while True:
@@ -58,18 +58,32 @@ while True:
             while True:
                 search = input('\nEnter username: ')
                 if search not in user_list:
-                    print(f"\nYour searched '{search}' user not found. Please search again")
+                    print(f"\nYour searched '{search}' user not found.")
+                    pop = input('''
+                        S --> Search again
+                        M --> Back to main menu
+                    ''')
+                    if pop == 'S' or pop == 's':
+                        continue
+                    elif pop == 'M' or pop == 'm':
+                        break
+                    else:
+                        print('Bad input')
+                        break
                 else: 
                     res = user_list[search]
                     print(f'''
 
                         Account information for {search}
-                        Name: {user_list[search]['name']}
-                        Email: {user_list[search]['email']}
+                        Name: {res['name']}
+                        Email: {res['email']}
 
                     ''')
                     break
     elif user_input == 'Q' or user_input == 'q':
         break
+    elif user_input == '':
+        print('Please input something')
+        continue
     else:
-        print('Bad input, try again\n')
+        print('\nBad input, try again\n')
